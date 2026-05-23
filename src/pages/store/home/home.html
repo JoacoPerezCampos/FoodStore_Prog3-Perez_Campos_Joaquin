@@ -17,7 +17,20 @@
     </a>
   </nav>
 
+  <!-- Overlay del drawer (mobile) -->
+  <div id="drawer-overlay" class="drawer-overlay"></div>
+
+  <!-- Drawer lateral (mobile) -->
+  <aside id="sidebar-drawer" class="sidebar-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <p class="sidebar-title">Categorías</p>
+      <button id="btn-cerrar-drawer" class="btn-cerrar-drawer" aria-label="Cerrar filtros">✕</button>
+    </div>
+    <ul id="categorias-list-drawer"></ul>
+  </aside>
+
   <div class="layout">
+    <!-- Sidebar estático (desktop) -->
     <aside class="sidebar">
       <p class="sidebar-title">Categorías</p>
       <ul id="categorias-list"></ul>
@@ -31,6 +44,9 @@
           placeholder="Buscar productos..."
           autocomplete="off"
         />
+        <button id="btn-filtrar" class="btn-filtrar" aria-label="Abrir filtro de categorías">
+          ☰ Filtrar
+        </button>
       </div>
       <div id="productos-container"></div>
     </main>

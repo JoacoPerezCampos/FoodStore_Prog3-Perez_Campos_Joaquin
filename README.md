@@ -1,83 +1,99 @@
-# Proyecto: Protección de Rutas (Educativo)
+# Food Store — Programación III
 
-## ✍️ Descripción
-
-Este es un proyecto de demostración creado con fines educativos para ilustrar un mecanismo básico de protección de rutas en el lado del cliente (frontend) utilizando **Vite** y **TypeScript**.
-
-El objetivo es mostrar cómo se puede restringir el acceso a ciertas páginas según el rol de un usuario (por ejemplo, `ADMIN` o `CLIENT`).
+**Tecnicatura Universitaria en Programación · UTN**  
+Recuperatorio Evaluación Parcial 1 — Programación III · 2026
 
 ---
 
-## ⚠️ ¡Importante! Nivel de Seguridad
+## Descripción
 
-La protección de rutas implementada en este proyecto **NO ES SEGURA** y no debe utilizarse en un entorno de producción.
+Food Store es una aplicación web frontend que simula el sitio de una casa de comidas o rotisería. Permite explorar un catálogo de productos, buscarlos por nombre, filtrarlos por categoría y gestionar un carrito de compras con persistencia en `localStorage`.
 
-- **Razón**: La lógica de autenticación se basa en datos guardados en `localStorage` en el navegador del usuario.
-- **Riesgo**: Cualquier usuario con conocimientos técnicos básicos puede abrir las herramientas de desarrollador del navegador para inspeccionar, modificar o eliminar los datos de `localStorage`, obteniendo así acceso no autorizado a rutas protegidas.
-
-Este enfoque es útil únicamente para fines de aprendizaje y para prototipos de bajo riesgo. La seguridad real debe implementarse en el **backend**.
+El proyecto fue desarrollado con HTML5, CSS3, TypeScript y Vite, sin el uso de frameworks externos, como parte de la evaluación de la materia Programación III.
 
 ---
 
-## 🚀 Instalación y Uso
+## Funcionalidades
 
-Se recomienda usar `pnpm` como gestor de paquetes para mayor eficiencia en el manejo de dependencias.
+- Catálogo de productos renderizado dinámicamente desde un array de datos
+- Búsqueda de productos por nombre en tiempo real (ignora acentos y mayúsculas)
+- Filtrado por categoría desde el menú lateral (Pizzas, Hamburguesas, Bebidas, Postres, Empanadas, Ensaladas)
+- Agregar productos al carrito con indicador visual de confirmación
+- Si un producto ya está en el carrito, se incrementa su cantidad en lugar de duplicarse
+- Vista del carrito con nombre, precio unitario, cantidad y subtotal por ítem
+- Controles para modificar cantidades (+/−) y eliminar ítems
+- Cálculo automático del total de la compra
+- Persistencia del carrito mediante `localStorage`
+- Diseño dark con paleta dorada, responsive
 
-### 1. Instalar pnpm
+---
 
-Si no tienes `pnpm` instalado, puedes hacerlo fácilmente a través de `npm` (que viene con Node.js) ejecutando el siguiente comando en tu terminal:
+## Tecnologías
 
-```bash
-npm install -g pnpm
+- HTML5
+- CSS3
+- TypeScript
+- Vite
+
+---
+
+## Estructura del proyecto
+
+```
+src/
+├── data/
+│   └── data.ts               # Productos y categorías
+├── types/
+│   ├── product.ts            # Interfaces Product y CartItem
+│   └── categoria.ts          # Interface ICategory
+├── utils/
+│   └── cart.ts               # Lógica del carrito (localStorage)
+└── pages/
+    └── store/
+        ├── home/
+        │   ├── home.html     # Catálogo de productos
+        │   └── home.ts       # Lógica: render, búsqueda, filtros, carrito
+        └── cart/
+            ├── cart.html     # Vista del carrito
+            └── cart.ts       # Lógica: render, cantidades, total
+style.css                     # Estilos globales y variables
 ```
 
-### 2. Instalar Dependencias del Proyecto
+---
 
-Una vez en la carpeta raíz del proyecto, instala las dependencias necesarias con `pnpm`:
+## Instalación y ejecución
+
+Requiere Node.js 18+ y pnpm.
 
 ```bash
+# 1. Clonar el repositorio
+git clone https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_JoaquinJoaquin.git
+cd FoodStore_Prog3-Perez_Campos_JoaquinJoaquin
+
+# 2. Instalar dependencias
 pnpm install
-```
 
-### 3. Ejecutar el Proyecto
-
-Para iniciar el servidor de desarrollo de Vite, ejecuta:
-
-```bash
+# 3. Iniciar servidor de desarrollo
 pnpm dev
 ```
 
-La aplicación estará disponible en la URL que aparezca en la terminal (generalmente `http://localhost:5173`).
+La aplicación estará disponible en `http://localhost:5173` y redirigirá automáticamente al catálogo.
 
 ---
 
-## ⚙️ ¿Cómo Funciona la Protección de Rutas?
+## Repositorio
 
-El mecanismo es simple y se gestiona desde el código TypeScript en la carpeta `src/utils`:
-
-1.  **Inicio de Sesión**: Cuando un usuario se "loguea", su información (incluido su rol) se guarda como un string JSON en `localStorage`.
-2.  **Carga de Página Protegida**: Cada vez que se intenta cargar una página protegida (ej. la página de Administrador), se ejecuta un script de verificación (`checkAuhtUser` en `src/utils/auth.ts`).
-3.  **Verificación**: El script comprueba:
-    - Si existe un usuario en `localStorage`. Si no, redirige al login.
-    - Si el rol del usuario guardado coincide con el rol requerido para acceder a esa página. Si no coincide, lo redirige a una página de acceso denegado o a su "home" correspondiente.
-4.  **Cierre de Sesión (Logout)**: Al cerrar sesión, la información del usuario se elimina de `localStorage`.
+[https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_JoaquinJoaquin.git](https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_JoaquinJoaquin.git)
 
 ---
 
-## 📁 Estructura del Proyecto
+## Video explicativo
 
-```
-/
-├── src/
-│   ├── pages/                # Contiene las páginas de la aplicación
-│   │   ├── admin/            # Páginas solo para administradores
-│   │   ├── auth/             # Páginas de autenticación (login, registro)
-│   │   └── client/           # Páginas solo para clientes
-│   ├── types/                # Define las interfaces y tipos (IUser, Rol)
-│   └── utils/                # Lógica reutilizable
-│       ├── auth.ts           # Función principal de verificación de rol y sesión
-│       ├── localStorage.ts   # Funciones para leer/escribir en localStorage
-│       └── navigate.ts       # Función para redirigir al usuario
-├── package.json              # Dependencias y scripts
-└── README.md                 # Este archivo
-```
+_(Link al video de presentación — próximamente)_
+
+---
+
+## Autor
+
+**Joaquín Pérez Campos**  
+Tecnicatura Universitaria en Programación · UTN

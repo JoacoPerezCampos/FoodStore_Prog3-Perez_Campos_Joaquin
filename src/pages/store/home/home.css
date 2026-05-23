@@ -30,7 +30,8 @@
   padding-left: 12px;
 }
 
-#categorias-list {
+#categorias-list,
+#categorias-list-drawer {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -64,9 +65,12 @@
   padding: 1.75rem 2rem;
 }
 
-/* ── Search ───────────────────────────────────────────────── */
+/* ── Search bar + filter row ──────────────────────────────── */
 .search-bar {
   margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #search-input {
@@ -89,6 +93,98 @@
 
 #search-input::placeholder {
   color: var(--text-muted);
+}
+
+/* ── Botón filtrar (solo mobile) ──────────────────────────── */
+.btn-filtrar {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-filtrar:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-filtrar.activo {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── Drawer overlay ───────────────────────────────────────── */
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.drawer-overlay.visible {
+  opacity: 1;
+}
+
+/* ── Drawer sidebar (mobile) ──────────────────────────────── */
+.sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: var(--bg-2);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem;
+  z-index: 210;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-drawer.abierto {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-left: 12px;
+}
+
+.drawer-header .sidebar-title {
+  margin-bottom: 0;
+}
+
+.btn-cerrar-drawer {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.btn-cerrar-drawer:hover {
+  color: var(--text);
 }
 
 /* ── Grid productos ───────────────────────────────────────── */
@@ -210,4 +306,83 @@
   color: var(--text-muted);
   padding: 4rem;
   font-size: 0.95rem;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* El layout pasa a una sola columna, el sidebar estático desaparece */
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  /* El main ocupa todo el ancho con menos padding */
+  .main {
+    padding: 1rem;
+  }
+
+  /* Search input ocupa todo menos el botón filtrar */
+  .search-bar {
+    margin-bottom: 1rem;
+  }
+
+  #search-input {
+    max-width: none;
+    flex: 1;
+  }
+
+  .btn-filtrar {
+    display: flex;
+  }
+
+  /* Grid de 2 columnas en mobile */
+  #productos-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* Cards más compactas */
+  .producto-img {
+    height: 130px;
+  }
+
+  .producto-info {
+    padding: 0.75rem;
+    gap: 0.3rem;
+  }
+
+  .producto-nombre {
+    font-size: 0.9rem;
+  }
+
+  .producto-descripcion {
+    display: none;
+  }
+
+  .producto-acciones {
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  /* El drawer overlay y sidebar se activan via JS */
+  .drawer-overlay {
+    display: block;
+    pointer-events: none;
+  }
+
+  .drawer-overlay.visible {
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  #productos-container {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-descripcion {
+    display: block;
+  }
 }

@@ -7,10 +7,15 @@ import type { ICategory } from "../../../types/Category";
 let categoriaSeleccionada: number | null = null;
 let textoBusqueda: string = "";
 
-const productosContainer = document.getElementById("productos-container") as HTMLElement;
-const categoriasList     = document.getElementById("categorias-list")     as HTMLElement;
-const searchInput        = document.getElementById("search-input")        as HTMLInputElement;
-const cartCount          = document.getElementById("cart-count")          as HTMLElement;
+const productosContainer  = document.getElementById("productos-container")     as HTMLElement;
+const categoriasList      = document.getElementById("categorias-list")          as HTMLElement;
+const categoriasListDrawer= document.getElementById("categorias-list-drawer")   as HTMLElement;
+const searchInput         = document.getElementById("search-input")             as HTMLInputElement;
+const cartCount           = document.getElementById("cart-count")               as HTMLElement;
+const btnFiltrar          = document.getElementById("btn-filtrar")              as HTMLButtonElement;
+const drawerOverlay       = document.getElementById("drawer-overlay")           as HTMLElement;
+const sidebarDrawer       = document.getElementById("sidebar-drawer")           as HTMLElement;
+const btnCerrarDrawer     = document.getElementById("btn-cerrar-drawer")        as HTMLButtonElement;
 
 // ── Normalizar texto (sin acentos, minúsculas) ────────────────────────────────
 function normalizar(texto: string): string {
@@ -90,32 +95,91 @@ function onAgregarAlCarrito(producto: Product, btn: HTMLButtonElement): void {
   }, 1200);
 }
 
-// ── Render categorías ─────────────────────────────────────────────────────────
-function renderCategorias(): void {
+// ── Render categorías (en una lista dada) ─────────────────────────────────────
+function crearItemsCategoria(
+  container: HTMLElement,
+  onSelect: (id: number | null, el: HTMLElement) => void
+): void {
   const categorias: ICategory[] = getCategories();
-  categoriasList.innerHTML = "";
+  container.innerHTML = "";
 
   const liTodas = document.createElement("li");
   liTodas.textContent = "Todos";
   liTodas.classList.add("categoria-item", "activa");
-  liTodas.addEventListener("click", () => seleccionarCategoria(null, liTodas));
-  categoriasList.appendChild(liTodas);
+  liTodas.addEventListener("click", () => onSelect(null, liTodas));
+  container.appendChild(liTodas);
 
   categorias.forEach((cat) => {
     const li = document.createElement("li");
     li.textContent = cat.nombre;
     li.classList.add("categoria-item");
     li.dataset.id = String(cat.id);
-    li.addEventListener("click", () => seleccionarCategoria(cat.id, li));
-    categoriasList.appendChild(li);
+    li.addEventListener("click", () => onSelect(cat.id, li));
+    container.appendChild(li);
   });
 }
 
-function seleccionarCategoria(id: number | null, elemento: HTMLElement): void {
+function renderCategorias(): void {
+  // Desktop sidebar
+  crearItemsCategoria(categoriasList, (id, el) => {
+    seleccionarCategoria(id, el, categoriasList);
+  });
+
+  // Mobile drawer
+  crearItemsCategoria(categoriasListDrawer, (id, el) => {
+    seleccionarCategoria(id, el, categoriasListDrawer);
+    cerrarDrawer();
+  });
+}
+
+function seleccionarCategoria(
+  id: number | null,
+  elemento: HTMLElement,
+  categoriasList: HTMLElement
+): void {
   categoriaSeleccionada = id;
-  document.querySelectorAll(".categoria-item").forEach((el) => el.classList.remove("activa"));
-  elemento.classList.add("activa");
+
+  // Sincronizar activa en ambas listas
+  [categoriasList, categoriasListDrawer].forEach((list) => {
+    list.querySelectorAll(".categoria-item").forEach((el) => el.classList.remove("activa"));
+    const match = id === null
+      ? (list.querySelector(".categoria-item") as HTMLElement)
+      : (list.querySelector(`[data-id="${id}"]`) as HTMLElement);
+    if (match) match.classList.add("activa");
+  });
+
+  // Actualizar label del botón filtrar
+  if (btnFiltrar) {
+    const label = id === null ? "Filtrar" : (elemento.textContent ?? "Filtrar");
+    btnFiltrar.innerHTML = `☰ ${label}`;
+    btnFiltrar.classList.toggle("activo", id !== null);
+  }
+
   renderProductos();
+}
+
+// ── Drawer (mobile) ───────────────────────────────────────────────────────────
+function abrirDrawer(): void {
+  sidebarDrawer.classList.add("abierto");
+  sidebarDrawer.setAttribute("aria-hidden", "false");
+  drawerOverlay.classList.add("visible");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarDrawer(): void {
+  sidebarDrawer.classList.remove("abierto");
+  sidebarDrawer.setAttribute("aria-hidden", "true");
+  drawerOverlay.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+
+function iniciarDrawer(): void {
+  btnFiltrar?.addEventListener("click", abrirDrawer);
+  btnCerrarDrawer?.addEventListener("click", cerrarDrawer);
+  drawerOverlay?.addEventListener("click", cerrarDrawer);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarDrawer();
+  });
 }
 
 // ── Contador carrito ──────────────────────────────────────────────────────────
@@ -138,6 +202,7 @@ function init(): void {
   renderCategorias();
   renderProductos();
   iniciarBusqueda();
+  iniciarDrawer();
   actualizarContadorCarrito();
 }
 
