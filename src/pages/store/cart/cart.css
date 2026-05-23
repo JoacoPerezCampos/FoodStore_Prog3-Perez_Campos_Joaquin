@@ -1,0 +1,193 @@
+/* ============================================================
+   cart.css — Food Store | Carrito
+   ============================================================ */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+/* ── Items ────────────────────────────────────────────────── */
+#cart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cart-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.15s;
+}
+
+.cart-item:hover {
+  border-color: var(--accent);
+}
+
+.cart-item-nombre {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cart-item-precio {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* ── Cantidad ─────────────────────────────────────────────── */
+.cart-item-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-cantidad {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-cantidad:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cantidad-valor {
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  color: var(--text);
+}
+
+/* ── Subtotal ─────────────────────────────────────────────── */
+.cart-item-subtotal {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+  min-width: 100px;
+  text-align: right;
+}
+
+/* ── Eliminar ─────────────────────────────────────────────── */
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.btn-eliminar:hover {
+  color: var(--danger);
+}
+
+/* ── Vacío ────────────────────────────────────────────────── */
+.carrito-vacio {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.carrito-vacio a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.carrito-vacio a:hover {
+  text-decoration: underline;
+}
+
+.cart-footer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+#cart-total {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── Checkout ─────────────────────────────────────────────── */
+.btn-checkout-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.btn-checkout {
+  padding: 13px 48px;
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: not-allowed;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+}
+
+.btn-checkout::after {
+  content: "Próximamente";
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  text-align: center;
+  opacity: 0.8;
+}
