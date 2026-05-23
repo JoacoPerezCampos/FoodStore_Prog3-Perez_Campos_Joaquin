@@ -83,13 +83,13 @@ La aplicación estará disponible en `http://localhost:5173` y redirigirá autom
 
 ## Repositorio
 
-[https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_JoaquinJoaquin.git](https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_JoaquinJoaquin.git)
+_https://github.com/JoacoPerezCampos/FoodStore_Prog3-Perez_Campos_Joaquin.git_
 
 ---
 
 ## Link al video explicativo en YouTube
 
-_(https://youtu.be/fng8UqLCRMg)_
+_https://youtu.be/fng8UqLCRMg_
 
 ---
 
