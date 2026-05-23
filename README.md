@@ -89,7 +89,7 @@ La aplicación estará disponible en `http://localhost:5173` y redirigirá autom
 
 ## Link al video explicativo en YouTube
 
-_("https://youtu.be/fng8UqLCRMg")_
+_(https://youtu.be/fng8UqLCRMg)_
 
 ---
 
