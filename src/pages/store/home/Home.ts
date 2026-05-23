@@ -1,4 +1,3 @@
-// src/pages/store/home/home.ts
 import { PRODUCTS, getCategories } from "../../../data/data";
 import { addToCart, getCart } from "../../../utils/cart";
 import type { Product } from "../../../types/Product";

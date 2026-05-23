@@ -9,7 +9,7 @@ Recuperatorio Evaluación Parcial 1 — Programación III · 2026
 
 Food Store es una aplicación web frontend que simula el sitio de una casa de comidas o rotisería. Permite explorar un catálogo de productos, buscarlos por nombre, filtrarlos por categoría y gestionar un carrito de compras con persistencia en `localStorage`.
 
-El proyecto fue desarrollado con HTML5, CSS3, TypeScript y Vite, sin el uso de frameworks externos, como parte de la evaluación de la materia Programación III.
+El proyecto fue desarrollado con HTML5, CSS3, TypeScript y Vite, sin el uso de frameworks externos, como parte de la instancia de recuperación del Primer Parcial de la materia Programación III.
 
 ---
 
@@ -87,9 +87,9 @@ La aplicación estará disponible en `http://localhost:5173` y redirigirá autom
 
 ---
 
-## Video explicativo
+## Link al video explicativo en YouTube
 
-_(Link al video de presentación — próximamente)_
+_("https://youtu.be/fng8UqLCRMg")_
 
 ---
 

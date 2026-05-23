@@ -1,4 +1,3 @@
-// src/data/data.ts
 import type { Product } from "../types/Product";
 import type { ICategory } from "../types/Category";
 
